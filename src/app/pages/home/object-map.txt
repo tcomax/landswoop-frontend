@@ -1,0 +1,81 @@
+export class BuyRequest {
+    id: number;
+    /*Land
+        Documents: document[]
+        Owner: Contact
+        coordinates: coordinate[];
+        size
+        price
+        created_date
+        modified_date
+    
+    User
+        id
+        Contact: contact
+        username
+        password
+        role {admin/member}
+        created_date
+        modified_date
+    
+       
+    Order
+        id
+        type {sell/buy}
+        buyer: user
+        land: land
+        quantity
+        status {sucessful/failed/pending//cancelled}
+        created_date
+        modified_date
+    
+    Document
+        id
+        type {CofO/SurveyPLan/Layout/Deed of Assignment}
+        reg.number
+        Authority: authority
+        image
+        owner: contact
+        created_date
+        modified_date
+
+    Contact
+        id
+        firstname
+        lastname
+        email
+        phone
+        created_date
+        modified_date
+    
+    Authority
+        id
+        type {government/surveyor}
+        name
+        Contacts: contact[]
+        created_date
+        modified_date
+    
+        Coordinate
+            id
+            longtitude
+            latitude
+            created_date
+            modified_date
+}
+
+ng g class landClass;
+ng g class userClass;
+ng g class contactClass;
+ng g class orderClass;
+ng g class documentClass;
+ng g class AuthorityClass;
+ng g class CoordinateClass;
+
+ng g interface landInterface;
+ng g interface userInterface;
+ng g interface contactInterface;
+ng g interface orderInterface;
+ng g interface documentInterface;
+ng g interface authorityInterface;
+ng g interface coordinateInterface;

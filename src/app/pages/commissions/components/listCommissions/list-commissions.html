@@ -1,0 +1,33 @@
+<div class="vertical-scroll">
+    <table class="table table-striped">
+      <thead>
+      </thead>
+      <tbody>
+      <tr *ngFor="let commission of commissions | searchfilter: 'location' : message">
+        <td class="table-id">
+          <button class="btn-default-outline btn-block"> 
+            <dl>
+                <dt class="text-capitalize text-right"> &#8358; {{commission.amount | number:'1.2-2'}}</dt>
+              <dd class="text-left">{{commission.rate | number:'1.2-2'}}% {{commission.type}} commission
+                for &#8358; {{commission.order.total | number:'1.2-2'}} paid by {{commission.order.buyer.contact.firstname}} 
+                {{commission.order.buyer.contact.lastname}} for {{commission.order.quantity}} m<sup>2</sup> at 
+                {{commission.order.land.location}}</dd>
+                <dd class="text-capitalize text-center"> <small>{{commission.date}}</small></dd> 
+                
+            </dl>
+          </button>          
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+<!--
+  id: number;
+  type: number;       // {sell/buy}
+  buyer: UserClass;
+  land: LandClass;
+  quantity: number;
+  status: number; 
+  total: number;    // {sucessful/failed/pending//cancelled}
+
+-->

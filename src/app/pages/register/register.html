@@ -1,0 +1,107 @@
+  <div *ngIf="isLargeDisplay">
+    <div style="position: fixed; z-index: 0; width: 100%; height: 100%">
+        <iframe frameborder="0" height="1440px" width="2560px" allowfullscreen
+        [src]="bgUrl | safeurl">
+      </iframe>
+    </div>
+  </div>
+  <div *ngIf="isSmallDisplay">
+      <div style="position: fixed; z-index: 0; width: 100%; height: 100%">
+          <iframe frameborder="0" height="720px" width="1280px" allowfullscreen
+            [src]="bgUrl | safeurl">
+          </iframe>
+      </div>
+    </div>
+
+    <div class="auth-block">     
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>   
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+      <div *ngIf="!register">
+      <div class="col-sm-12">            
+        <div class="form-group row" [ngClass]="{'has-error': (!invitedBy.valid && invitedBy.touched), 'has-success': (invitedBy.valid && invitedBy.touched)}">
+          <input [formControl]="invitedBy" type="text" class="form-control" id="inputPhone3" 
+              placeholder="Phone number of member that invited you" (keyup.enter)="findContactByPhone()">
+        </div>
+      </div>
+      <div class="col-sm-12" >
+        <div class="form-group row" [ngClass]="{'has-error': (!member.valid && member.touched), 'has-success': (member.valid && member.touched)}">
+          <input [formControl]="member" type="text" class="form-control" id="inputName3" 
+          placeholder="Fill in the names of member that invited you" (keyup.enter)="findContactByPhone()">
+        </div>
+        <button [disabled]="!member.valid || !invitedBy.valid" type="submit" class="btn btn-default btn-auth" (click)="findContactByPhone()">Verify</button>
+        <div><a routerLink="/login" class="auth-link">Already have an App account? Sign in!</a> </div>               
+        
+      </div> 
+      </div>
+      <div *ngIf="message" style="color:white;" class="help-block sub-little-text ">Membership could not be found. Please contact the member. </div>              
+      <div *ngIf="register">
+        <div class="form-group row" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
+          <label for="inputName3" class="col-sm-2 control-label">Name</label>
+  
+          <div class="col-sm-10" >
+            <input [formControl]="name" type="text" class="form-control" id="inputName3" placeholder="Full Name">
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!phone.valid && phone.touched), 'has-success': (phone.valid && phone.touched)}">
+            <label for="inputPhone3" class="col-sm-2 control-label">Phone</label>
+    
+            <div class="col-sm-10">
+              <input [formControl]="phone" type="text" class="form-control" id="inputPhone3" placeholder="Phone">
+            </div>
+          </div>      
+        <div class="form-group row" [ngClass]="{'has-error': (!email.valid && email.touched), 'has-success': (email.valid && email.touched)}">
+          <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+  
+          <div class="col-sm-10">
+            <input [formControl]="email" type="email" class="form-control" id="inputEmail3" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
+          <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+  
+          <div class="col-sm-10">
+            <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <div class="offset-sm-2 col-sm-10">
+            <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Sign up</button>
+          </div>
+        </div>
+        <div class="auth-sep"><span><span>or Sign up with one click</span></span></div>
+        
+            <div class="al-share-auth">
+              <ul class="al-share clearfix">
+                <li><i class="socicon socicon-facebook" title="Share on Facebook"></i></li>
+                <li><i class="socicon socicon-twitter" title="Share on Twitter"></i></li>
+                <li><i class="socicon socicon-google" title="Share on Google Plus"></i></li>
+              </ul>
+            </div>
+      </div>
+    </form>
+  </div>

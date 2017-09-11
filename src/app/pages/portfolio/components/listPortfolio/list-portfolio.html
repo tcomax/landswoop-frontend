@@ -1,0 +1,20 @@
+
+<div class="vertical-scroll">
+    <table class="table table-striped">
+        <thead>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of portfolio | searchfilter: 'location' : message">
+                <td class="table-id">
+                    <button class="btn-default-outline btn-block" (click)="lgModalShow(item)"> 
+                        <dl>
+                            <dt class="text-capitalize text-right"> &#8358; {{item.land.price | number:'1.2-2'}} per Mini-Plot</dt>
+                            <dd class="text-left"><b>{{item.quantity}} Mini-Plots </b> {{item.land.location}}. The property is situated within {{item.land.description}}</dd> 
+                        </dl>
+                    </button>      
+               
+                </td>
+            </tr>
+        </tbody>
+    </table>    
+</div>
