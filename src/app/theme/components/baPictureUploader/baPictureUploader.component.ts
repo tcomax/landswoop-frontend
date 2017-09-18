@@ -8,8 +8,8 @@ import { NgUploaderOptions } from 'ngx-uploader';
 })
 export class BaPictureUploader {
 
-  @Input() defaultPicture:string = '';
-  @Input() picture:string = '';
+  @Input() defaultPicture: string = '/assets/img/app/profile/default.png';
+  @Input() picture: string = '';
 
   @Input() uploaderOptions:NgUploaderOptions = { url: '' };
   @Input() canDelete:boolean = true;
@@ -49,9 +49,9 @@ export class BaPictureUploader {
     return false;
   }
 
-  _changePicture(file:File):void {
+  _changePicture(file: File): void {
     const reader = new FileReader();
-    reader.addEventListener('load', (event:Event) => {
+    reader.addEventListener('load', (event: Event) => {
       this.picture = (<any> event.target).result;
     }, false);
     reader.readAsDataURL(file);
@@ -70,7 +70,7 @@ export class BaPictureUploader {
     this.onUploadCompleted.emit(data);
   }
 
-  _canUploadOnServer():boolean {
+  _canUploadOnServer(): boolean {
     return !!this.uploaderOptions['url'];
   }
 }
