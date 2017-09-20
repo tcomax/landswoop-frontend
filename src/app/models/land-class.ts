@@ -4,24 +4,28 @@ import { CoordinateClass } from './coordinate-class';
 
 export class LandClass {
     id: number;
-    documents: DocumentClass[];
-    owners: ContactClass[];
-    coordinates: CoordinateClass[];
+    ownerId: number;
     description: string;
     location: string;
-    size: number;
+    area: number;
+    available: number;
     price: number;
 
-    constructor(_id: number, _documents: DocumentClass[], _owners: ContactClass[],
-                _coordinates: CoordinateClass[], _description: string,
-                _location: string, _size: number, _price: number) {
+    constructor(
+        _id: number, 
+        _ownerId: number,
+        _description: string,
+        _location: string, 
+        _area: number, 
+        _available: number, 
+        _price: number,
+    ) {
         this.id = _id;
-        this.documents = _documents;
-        this.owners = _owners;
-        this.coordinates = _coordinates;
+        this.ownerId = _ownerId;
         this.description = _description;
         this.location = _location;
-        this.size = _size;
+        this.area = _area;
+        this.available = _available;
         this.price = _price;
     }
 }

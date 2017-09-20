@@ -1,0 +1,41 @@
+<div class="modal-content">
+  <div class="modal-header"> 
+    <h4 class="modal-title">{{modalHeader}}</h4>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true" class="{float:right}">&times;</span>
+    </button>
+  </div>
+  <div align="left" class="modal-body margin:auto">
+  <br>
+  <label class="control-label" for="orderTypeSuccess2">
+    {{trnx.description}} 
+    {{trnx.available | number:'1.2-2'}} per M<sup>2</sup> of available land @ &#8358; {{trnx.price | number:'1.2-2'}} per M<sup>2</sup>
+    <br>
+    <br>
+  </label>
+  <div *ngIf="trnx.id > 0; then ifcondition else elsecondition"> ... </div>  
+  <template #ifcondition>
+    <div class="form-group has-success has-feedback">
+      <input type="text" class="form-control text-right" id="qty" aria-describedby="qty"
+      [(ngModel)]="quantity" (ngModelChange)="getOrderTotal(quantity)" placeholder="Enter square-meters needed e.g 10" value='0'>
+    </div>
+    <br>
+    <div>
+      <hr>
+      <div class="text-capitalize text-right width:80%">Total: &#8358; {{trnx.total | number:'1.2-2'}}</div> 
+      <hr>
+    </div>
+    <br>
+    <button class="btn-lg btn-success btn-block"  (click)="createTransaction(order, land)">Buy</button>
+    <br>
+  </template>  
+  <template #elsecondition style=" color: orange "><B>Sold Out!</B></template> 
+    <div *ngFor="let doc of land.documents">
+        <img [src]="doc.image" height="32" width="32">
+        {{doc.type}} - {{doc.registrationNumber}}
+        <br>
+    </div>
+  </div>  
+   <div align="center" class="modal-footer margin:auto">
+  </div>
+</div>

@@ -24,12 +24,8 @@ export const routes: Routes = [
         loadChildren: './commissions/commissions.module#CommissionsModule',
       },
       { 
-        path: 'orders', 
-        loadChildren: './orders/orders.module#OrdersModule',
-      },
-      { 
-        path: 'orders/create', 
-        loadChildren: './orders/components/createOrder/create-order.module#CreateOrderModule',
+        path: 'transactions', 
+        loadChildren: './transactions/transactions.module#TransactionsModule',
       },
       { 
         path: 'lands', 

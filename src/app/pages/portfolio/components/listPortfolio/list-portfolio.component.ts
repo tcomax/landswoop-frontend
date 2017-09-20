@@ -1,16 +1,16 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { PortfolioClass } from '../../../../models/portfolio-class';
-import { OrderClass } from '../../../../models/order-class';
+import { TransactionClass } from '../../../../models/transaction-class';
 
 import { TradeService } from '../../../../services/trade.service';
 import { SearchService } from '../../../../services/search.service';
-import { MockDataService } from '../../../../services/mock-data.service';
-
-import { Subscription } from 'rxjs/Subscription';
-
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DefaultModal } from './default-modal/default-modal.component';
+import { SearchFilterPipe } from '../../../../filters/search-filter.pipe';
+
+import { UserDataService } from '../../../../services/userdata.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-list-portfolio',
@@ -19,7 +19,7 @@ import { DefaultModal } from './default-modal/default-modal.component';
 })
 export class ListPortfolioComponent implements OnDestroy, OnInit {
 
-  order: OrderClass;
+  folio: PortfolioClass[];
   message: any;
   subscription: Subscription;
 
@@ -33,31 +33,66 @@ export class ListPortfolioComponent implements OnDestroy, OnInit {
     this.subscription = this._ss.getMessage().subscribe(
       data => { 
         this.message = data; 
-        console.log('listLandsComponent '.concat(this.message));
+        console.log('listPortfolioComponent '.concat(this.message));
       },
       error => {
-        console.log('Error listLandsComponent '.concat(error));
+        console.log('Error listPortfolioComponent '.concat(error));
       });
   }
 
   constructor(
-    private _mds: MockDataService, 
     private _ts: TradeService, 
     private _ss: SearchService,
+    private uds: UserDataService,   
     private modalService: NgbModal) {
-      this.portfolio = _mds.portfolio;
+      
+      this.subscription = this._ss.getMessage().subscribe(
+        data => { 
+          this.message = data; 
+          console.log('listPortfolioComponent '.concat(this.message));
+          this.uds.setData('listPortfolioComponent', 'portfolio', 'reload', {});
+        },
+        error => {
+          console.log('Error listPortfolioComponent '.concat(error));
+        });
+       
+        this.subscription = this.uds.getData('listPortfolioComponent').subscribe(
+          payload => { 
+            if ((payload.key === 'portfolio') && (payload.sender !== 'listPortfolioComponent')) {
+              let key: any;
+              let dFolio: PortfolioClass[] = [];
+              for (key in payload.data) {
+                if (key) {
+                  let folio = payload.data[key];
+                   console.log(`folio in payload: ${JSON.stringify(folio)}`);
+                  dFolio[key] = new PortfolioClass(
+                    folio.id, folio.land_id, folio.quantity, 
+                    folio.total, folio.location);
+                }
+              }
+              this.folio = dFolio;           
+              // this.lands = this._mds.lands;              
+              
+              // console.log(`list-trnxs: ${JSON.stringify(JSON.stringify(this.trnxs))}`);
+            }
+          },
+          error => {
+            console.log(`Error getting portfolio data from UDS - ${error}`);
+          });
   }
 
   @Input() portfolio: PortfolioClass[];
 
-  lgModalShow(portfolioItem: PortfolioClass) {
-    // alert(portfolioItem.land.id);
-    this.order = new OrderClass(this._mds.orders.length, 'SELL', this._mds.users[0], 
-      this._mds.lands[portfolioItem.land.id], portfolioItem.quantity, 
-      portfolioItem.quantity * portfolioItem.land.price, 'PENDING', '09/01/2017 10:23:00' );
+  lgModalShow(selection: PortfolioClass) {
+    /* alert(portfolioItem.land.id);
+    this.trnx = new TransactionClass(null, 1, selection.landId, 
+      selection.location, null, null,
+      selection.quantity, 0, null, 
+      null, 0);
+
     const activeModal = this.modalService.open(DefaultModal, { size: 'lg' });
-    activeModal.componentInstance.modalHeader = 'Sell Land';
-    activeModal.componentInstance.order = this.order;
+    activeModal.componentInstance.modalHeader = 'Details';
+    activeModal.componentInstance.portfolio = selection;*/
   }
 
 }

@@ -14,7 +14,6 @@ import { PortfolioComponent } from './portfolio.component';
 import { ListPortfolioComponent } from './components/listPortfolio/list-portfolio.component';
 import { DefaultModal } from './components/listPortfolio/default-modal/default-modal.component';
 
-import { MockDataService } from '../../services/mock-data.service';
 import { TradeService } from '../../services/trade.service';
 import { SearchService } from '../../services/search.service';
 import { SearchFilterModule } from '../../filters/search-filter.module';
@@ -36,7 +35,6 @@ import { SearchFilterModule } from '../../filters/search-filter.module';
     DefaultModal,
   ],  
   providers: [
-    MockDataService,
     TradeService,    
   ],
   entryComponents: [DefaultModal],

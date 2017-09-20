@@ -1,12 +1,11 @@
-import { OrderClass } from './order-class';
-import { UserClass } from './user-class';
-
-export interface OrderInterface {
+export interface CommissionInterface {
     id: number;
     type: string; // (referral | holdings)
-    order: OrderClass;
-    recipient: UserClass;
+    rate: number;
     amount: number;
-    rate: number;    
-    status: number; // {sucessful/failed/pending//cancelled}
+    trnxId: number;
+    trnxAmount: number;
+    buyer: string;    
+    location: string;
+    date: Date;
 }

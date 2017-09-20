@@ -13,7 +13,8 @@ import { OrderClass } from '../../../../../models/order-class';
 export class DefaultModal implements OnInit {
 
   quantity: number;
-  order: OrderClass;
+  total: number;
+  price: number;
   modalHeader: string;
   modalContent: string = `Lorem ipsum dolor sit amet,
    consectetuer adipiscing elit, sed diam nonummy
@@ -36,7 +37,7 @@ export class DefaultModal implements OnInit {
       quantity = 0;
     }
     this.quantity = parseFloat(quantity);
-    this.order.total = this.quantity * this.order.land.price;
+    this.total = this.quantity * this.price;
   }
 
 }

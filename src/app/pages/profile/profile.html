@@ -25,7 +25,13 @@
 
       <div class="form-group row">
         <div class="offset-sm-2 col-sm-10">
-            <ba-picture-uploader></ba-picture-uploader>
+            <ba-picture-uploader #photo
+            [defaultPicture]="'/assets/img/app/profile/default.png'"
+            [picture]="avatar"
+            [canDelete]="true"
+            (UploadCompleted)="getFileName($event)"            
+            (onUpload)="getFileName($event)">
+            </ba-picture-uploader>
             <br>
           <button [disabled]="!form.valid" type="submit" class="btn btn-warning btn-auth">Update</button>
         </div>

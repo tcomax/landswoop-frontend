@@ -6,10 +6,8 @@ import { NgaModule } from '../../../../theme/nga.module';
 import { routing } from './list-lands.routing';
 
 import { ListLandsComponent } from './list-lands.component';
-import { CreateOrderComponent } from '../../../orders/components/createOrder/create-order.component';
 import { DefaultModal } from './default-modal/default-modal.component';
 
-import { MockDataService } from '../../../../services/mock-data.service';
 import { TradeService } from '../../../../services/trade.service';
 import { SearchService } from '../../../../services/search.service';
 

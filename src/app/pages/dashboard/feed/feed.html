@@ -4,12 +4,12 @@
       <img class="photo-icon" src="{{ ( message.author | baProfilePicture ) }}">
     </div>
     <div class="message-icon" *ngIf="message.type != 'text-message'">
-      <img class="photo-icon" src="{{ ( message.author | baProfilePicture ) }}">
+      <img class="photo-icon" src="{{ ( message.photo_url | baProfilePicture ) }}">
       <span class="sub-photo-icon" [ngClass]="message.type"></span>
     </div>
     <div class="text-block text-message">
       <div class="message-header">
-        <span class="author">{{ message.author }} {{ message.surname}}</span>
+        <span class="author">{{ message.name }} </span>
       </div>
       <div class="message-content line-clamp" [ngClass]="{'line-clamp-2' : !message.expanded}">
         <span *ngIf="message.preview">{{ message.header }} </span>{{ message.text }}
@@ -24,7 +24,7 @@
           {{ message.time }}
         </div>
         <div class="ago-time">
-          {{ message.ago }}
+          {{ message.agoStr | amTimeAgo}}
         </div>
       </div>
     </div>

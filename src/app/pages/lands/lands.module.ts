@@ -14,7 +14,6 @@ import { LandsComponent } from './lands.component';
 import { ListLandsComponent } from './components/listLands/list-lands.component';
 import { DefaultModal } from './components/listLands/default-modal/default-modal.component';
 
-import { MockDataService } from '../../services/mock-data.service';
 import { TradeService } from '../../services/trade.service';
 import { SearchService } from '../../services/search.service';
 import { SearchFilterModule } from '../../filters/search-filter.module';

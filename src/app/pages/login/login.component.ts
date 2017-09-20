@@ -6,6 +6,9 @@ import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserDataService } from '../../services/userdata.service';
+import { UserClass } from '../../models/user-class';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'login',
@@ -18,7 +21,7 @@ export class Login {
   email: AbstractControl;
   password: AbstractControl;
   submitted: boolean = false;
-  url: string = 'http://localhost:3000/auth/login';
+  url: string = 'http://localhost:3000/auth';
   reqBody: string;
   headers: Headers = new Headers();
   mobHeight: any;
@@ -28,8 +31,16 @@ export class Login {
   bgUrls: string[];
   bgUrl: string;
   idx: number;
+  user: UserClass;
+  subscription: Subscription;
+  data: any;
+  
 
-  constructor( fb: FormBuilder, private http: Http, private router: Router) {
+  constructor( 
+    fb: FormBuilder, 
+    private http: Http, 
+    private router: Router,
+    private uds: UserDataService) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -68,16 +79,6 @@ export class Login {
   }
 
   private extractResponseHeaders(res: Response) {
-    console.log(`Access-Control-Allow-Credentials: ${res.headers.getAll('Access-Control-Allow-Credentials')}`);
-    console.log(`Connection: ${res.headers.getAll('Connection')}`);
-    console.log(`Content-Length: ${res.headers.getAll('Content-Length')}`);
-    console.log(`Content-Type: ${res.headers.getAll('Content-Type')}`);
-    console.log(`Date: ${res.headers.getAll('Date')}`);
-    console.log(`Etag: ${res.headers.getAll('Etag')}`);
-    console.log(`Set-Cookie: ${res.headers.getAll('Set-Cookie')}`);
-    console.log(`Vary: ${res.headers.getAll('Vary')}`);
-    console.log(`X-Powered-By: ${res.headers.getAll('X-Powered-By')}`);
-    return res;
   }
 
   private extractRequestHeaders(headers: Headers) {
@@ -102,12 +103,11 @@ export class Login {
       console.log(`login req.body: ${reqBody}`);
       const options = new RequestOptions({ headers: this.headers, withCredentials: true });
       console.log(`login options: ${JSON.stringify(options)}`);                    
-      const response = this.http.post(this.url, reqBody, options);
-        response.map(this.extractResponseHeaders)
-        .map(res => res.json())
+      const response = this.http.post(`${this.url}/login`, reqBody, options);
+        response.map(res => res.json())
         .subscribe(
           data => { 
-            console.log(`data => ${JSON.stringify(data)}`);
+            console.log(`login data => ${JSON.stringify(data)}`);
             if (data) {
               if (data.status === 'success') {
                 this.router.navigateByUrl('/pages/dashboard');
@@ -117,9 +117,9 @@ export class Login {
           err => {
             console.log(`error => code:${err.code} status:${err.status} `);
             if (err.status === 401) {
-              this.router.navigateByUrl('/pages/dashboard');
+              location.reload();              
             } else if (err.status === 404) {
-              location.reload();
+              this.router.navigateByUrl('/login');
             }
           },
           () => {

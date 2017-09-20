@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FeedService } from './feed.service';
 
@@ -19,7 +19,7 @@ export class Feed {
   constructor(private _feedService: FeedService) {
   }
 
-  ngOnInit() {
+  OnInit() {
     this._loadFeed();
   }
 
@@ -29,8 +29,8 @@ export class Feed {
 
   private _loadFeed() {
     setInterval(() => {
-      this.feed = this._feedService.getData(this.limit, this.offset);
+      //this.feed = this._feedService.getData(this.limit, this.offset);
       // console.log(`feed component: ${this.feed}`);
-    }, 10000);
+    }, 100000);
   }
 }

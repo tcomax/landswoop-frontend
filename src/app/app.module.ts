@@ -17,9 +17,9 @@ import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 
-import { MockDataService } from './services/mock-data.service';
 import { TradeService } from './services/trade.service';
 import { SearchService } from './services/search.service';
+import { UserDataService } from './services/userdata.service';
 import { SearchFilterModule } from './filters/search-filter.module';
 import { SafeUrlFilterModule } from './filters/safeurl-filter.module';
 import { SafeUrlFilterPipe } from './filters/safeurl-filter.pipe';
@@ -31,8 +31,8 @@ const APP_PROVIDERS = [
   AppState,
   GlobalState,
   SearchService,
-  MockDataService,
   TradeService,
+  UserDataService,
 ];
 
 export type StoreType = {

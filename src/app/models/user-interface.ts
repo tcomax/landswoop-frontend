@@ -1,10 +1,11 @@
-import { ContactClass } from './contact-class';
-
 
 export interface UserInterface {
     id: number;
-    contact: ContactClass;
-    username: string;
-    password: string;
-    role: number;
+    name: string;
+    phone: string;
+    email: string;
+    photoUrl: string;
+    bank: string;
+    accountNum: string;
+    invitedBy: string;
 }

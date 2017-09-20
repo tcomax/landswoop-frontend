@@ -1,7 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { UserDataService } from '../../../../../services/userdata.service';
+import { Subscription } from 'rxjs/Subscription';
+
+import { LandClass } from '../../../../../models/land-class';
 import { OrderClass } from '../../../../../models/order-class';
+import { TransactionClass } from '../../../../../models/transaction-class';
+
+
+import { HttpModule } from '@angular/http';
+import { Http, Response } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,21 +22,27 @@ import { OrderClass } from '../../../../../models/order-class';
 })
 
 export class DefaultModal implements OnInit {
-
+  subscription: Subscription;  
   quantity: number;
-  order: OrderClass;
+  trnx: TransactionClass;
   modalHeader: string;
-  modalContent: string = `Lorem ipsum dolor sit amet,
-   consectetuer adipiscing elit, sed diam nonummy
-   nibh euismod tincidunt ut laoreet dolore magna aliquam
-   erat volutpat. Ut wisi enim ad minim veniam, quis
-   nostrud exerci tation ullamcorper suscipit lobortis
-   nisl ut aliquip ex ea commodo consequat.`;
+  modalContent: string = ``;
+  land: LandClass;
+  url: string = 'http://localhost:3000';
+  headers: Headers = new Headers();
+  
 
-  constructor(private activeModal: NgbActiveModal) {
+  constructor(
+    private activeModal: NgbActiveModal, 
+    private uds: UserDataService,
+    private router: Router, 
+    private http: Http) {
+  
+    }
+
+  ngOnInit() {
+    this.getDocuments(this.trnx.id);              
   }
-
-  ngOnInit() {}
 
   closeModal() {
     this.activeModal.close();
@@ -35,8 +52,54 @@ export class DefaultModal implements OnInit {
     if (!isFinite(quantity)) {
       quantity = 0;
     }
-    this.quantity = parseFloat(quantity);
-    this.order.total = this.quantity * this.order.land.price;
+    this.trnx.quantity = parseFloat(quantity);
+    this.trnx.total = this.trnx.quantity * this.trnx.price;
   }
 
+  getDocuments(landId: number) {
+    const headers: Headers = new Headers();  
+    const options = new RequestOptions({ headers, withCredentials: true });  
+    this.http.get(`${this.url}/auth/documents/?landId=${landId}`, options)  
+    .map(res => res.json()) 
+    .subscribe(
+      resp => {         
+        if (resp.statusText === 'success') {
+          console.log(` getDocuments resp: ${JSON.stringify(resp.statusText)}`);          
+          // get land referred to by transaction
+          // documents of land
+        }
+      },
+      err => { 
+        console.log(err);
+        this.router.navigateByUrl('/login');
+      },
+      () => console.log('got documents'),
+    ); 
+     
+  }
+  createTransaction(trnx: TransactionClass) {
+    const headers: Headers = new Headers();  
+    headers.append('Content-Type', 'application/json;charset=UTF-8'); 
+    const options = new RequestOptions({ headers, withCredentials: true }); 
+    const body = `${JSON.stringify(trnx)}`;
+    console.log(`trnx: ${JSON.stringify(trnx)}`);    
+    this.http.post(`${this.url}/auth/transactions`, body, options)  
+    .map(res => res.json()) 
+    .subscribe(
+      resp => { 
+        console.log(`createTransactions resp: ${JSON.stringify(resp.statusText)}`);
+        
+        if (resp.statusText === 'success') {
+          this.activeModal.close();          
+          this.router.navigateByUrl('/pages/transactions');            
+        }
+      },
+      err => { 
+        console.log(err);
+        this.router.navigateByUrl('/login');
+      },
+      () => console.log('Transaction Sent'),
+    ); 
+     
+  }
 }

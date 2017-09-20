@@ -1,21 +1,18 @@
-import { DocumentClass } from './document-class';
-import { UserClass } from './user-class';
-import { LandClass } from './land-class';
-
 export class PortfolioClass {
     id: number;
-    owner: UserClass;
-    land: LandClass;
-    status: string; 
+    landId: number;
     quantity: number;
+    total: number;
+    location: string;
 
-    constructor(_id: number, _owner: UserClass,
-                _land: LandClass, _quantity: number, _status: string) {
+    constructor(_id: number,
+                _landId: number, _quantity: number, 
+                _total: number, _location: string) {
         this.id = _id;
-        this.owner = _owner;
-        this.land = _land;
+        this.landId = _landId;
         this.quantity = _quantity;
-        this.status = _status;
+        this.total = _total;
+        this.location = _location;
     }
 /*
     getAllOrders(): OrderClass {

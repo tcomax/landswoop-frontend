@@ -1,0 +1,38 @@
+
+<div class="vertical-scroll">
+    <table class="table table-striped">
+        <thead>
+            </thead>
+        <tbody>
+            <tr *ngFor="let trxn of trxns | searchfilter: 'location' : message">
+                <td class="table">
+                    <button class="btn-default-outline btn-block" (click)="showDetails(trxn)"> 
+                        <dl>
+                            <dt><div *ngIf="trxn.status === 0; else isDenied" class="text-capitalize text-left" style="color:green">Approved</div></dt>
+                            <ng-template #isDenied>
+                                <div *ngIf="trxn.status < 0; else isPending" class="text-capitalize text-left" style="color:red">Denied</div>
+                            </ng-template> 
+                            <ng-template #isPending>
+                                <div class="text-capitalize text-left" style="color:orange">Pending</div>
+                            </ng-template> 
+                            <dt class="text-capitalize text-right"> &#8358; {{trxn.total | number:'1.2-2'}}</dt>    
+                            <dd class="text-left">Bought {{trxn.quantity | number:'1.2-2'}} m<sup>2</sup> at &#8358; 
+                                {{trxn.price | number:'1.2-2'}} per m<sup>2</sup> within {{trxn.location}}
+                            </dd>
+                            <dd class="text-left">    
+                                Land #: {{trxn.landId}} 
+                            </dd>
+                            <dd class="text-left">  
+                                Transaction #: {{trxn.id}}
+
+                            </dd> 
+                            <dd class="text-capitalize text-right"> {{trxn.date}}</dd> 
+                            <hr>
+                        </dl>
+                    </button>      
+               
+                </td>
+            </tr>
+        </tbody>
+    </table>    
+</div>

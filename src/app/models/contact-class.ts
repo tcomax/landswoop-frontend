@@ -1,16 +1,16 @@
 import { ContactInterface } from './contact-interface';
+
 export class ContactClass implements ContactInterface {
+
     id: number;
-    firstname: string;
-    lastname: string;
+    name: string;
     email: string;
     phone: string;
 
-    constructor(_id: number, _firstname: string, _lastname: string, _email: string, _phone: string) {
-        this.id = _id;
-        this.firstname = _firstname;
-        this.lastname = _lastname;
-        this.email = _email;
-        this.phone = _phone;
+    constructor(_contact: any) {
+        this.id = _contact.id;
+        this.name = _contact.name;
+        this.email = _contact.email;
+        this.phone = _contact.phone;
     }
 }

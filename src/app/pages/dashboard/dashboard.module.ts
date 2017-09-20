@@ -22,8 +22,7 @@ import { PieChartService } from './pieChart/pieChart.service';
 import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
-import { MockDataService } from '../../services/mock-data.service';
-
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   imports: [
@@ -32,6 +31,7 @@ import { MockDataService } from '../../services/mock-data.service';
     AppTranslationModule,
     NgaModule,
     routing,
+    MomentModule,
   ],
   declarations: [
     PopularApp,
@@ -52,7 +52,6 @@ import { MockDataService } from '../../services/mock-data.service';
     TodoService,
     TrafficChartService,
     UsersMapService,
-    MockDataService,
   ],
 })
 export class DashboardModule {}

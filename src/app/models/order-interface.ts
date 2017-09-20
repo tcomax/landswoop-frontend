@@ -4,13 +4,13 @@ import { LandClass } from './land-class';
 
 export interface OrderInterface {
     id: number;
-    type: string;       // {sell/buy}
+    type: number;       // {sell/buy}
     buyer: UserClass;
     seller: UserClass;
     land: LandClass;
     quantity: number;
-    total: number;
-    status: string;     // {sucessful/failed/pending//cancelled}
+    status: string; 
+    total: number; 
     date: Date;   // {sucessful/failed/pending//cancelled}
     
 }

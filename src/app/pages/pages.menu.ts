@@ -27,7 +27,7 @@ export const PAGES_MENU = [
         },
       },
       {
-        path: 'orders',
+        path: 'transactions',
         data: {
           menu: {
             title: 'general.menu.transactions',

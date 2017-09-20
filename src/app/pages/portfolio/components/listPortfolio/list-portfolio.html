@@ -4,12 +4,12 @@
         <thead>
         </thead>
         <tbody>
-            <tr *ngFor="let item of portfolio | searchfilter: 'location' : message">
+            <tr *ngFor="let item of folio | searchfilter: 'location' : message">
                 <td class="table-id">
                     <button class="btn-default-outline btn-block" (click)="lgModalShow(item)"> 
                         <dl>
-                            <dt class="text-capitalize text-right"> &#8358; {{item.land.price | number:'1.2-2'}} per Mini-Plot</dt>
-                            <dd class="text-left"><b>{{item.quantity}} Mini-Plots </b> {{item.land.location}}. The property is situated within {{item.land.description}}</dd> 
+                            <dt class="text-capitalize text-right"> <b>Amount Paid: &#8358; {{item.total | number:'1.2-2'}}</b></dt>
+                            <dd class="text-left">{{item.quantity}} m<sup>2</sup> at  {{item.location}}. </dd> 
                         </dl>
                     </button>      
                

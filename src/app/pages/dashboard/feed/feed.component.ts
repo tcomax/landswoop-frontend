@@ -1,6 +1,8 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {FeedService} from './feed.service';
+import { FeedService } from './feed.service';
+
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 @Component({
   selector: 'feed',
@@ -9,20 +11,26 @@ import {FeedService} from './feed.service';
 })
 export class Feed {
 
-  public feed:Array<Object>;
+  feed: any;
 
-  constructor(private _feedService:FeedService) {
+  limit = 10;
+  offset = 0;
+
+  constructor(private _feedService: FeedService) {
   }
 
-  ngOnInit() {
+  OnInit() {
     this._loadFeed();
   }
 
-  expandMessage (message){
+  expandMessage (message) {
     message.expanded = !message.expanded;
   }
 
   private _loadFeed() {
-    this.feed = this._feedService.getData();
+    setInterval(() => {
+      // this.feed = this._feedService.getData(this.limit, this.offset);
+      // console.log(`feed component: ${this.feed}`);
+    }, 100000);
   }
 }

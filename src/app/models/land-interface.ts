@@ -4,11 +4,11 @@ import { CoordinateClass } from './coordinate-class';
 
 
 export interface LandInterface {
-    documents: DocumentClass[];
-    owners: ContactClass;
-    coordinates: CoordinateClass[];
+    id: number;
+    ownerId: number;
     description: string;
     location: string;
-    size: number;
+    area: number;
+    available: number;
     price: number;
 }
