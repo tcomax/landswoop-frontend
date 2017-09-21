@@ -1,4 +1,4 @@
-import { LandClass } from './land-Class';
+import { LandClass } from './land-class';
 
 export interface CoordinateInterface {
     id: number;

@@ -109,8 +109,10 @@ export class Login {
           data => { 
             console.log(`login data => ${JSON.stringify(data)}`);
             if (data) {
-              if (data.status === 'success') {
+              if (data.profile !== undefined) {
                 this.router.navigateByUrl('/pages/dashboard');
+              } else {
+                this.router.navigateByUrl('/pages/profile');
               }
             }
           },

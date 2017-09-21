@@ -1,5 +1,5 @@
 import { CoordinateInterface } from './coordinate-interface';
-import { LandClass } from './land-Class';
+import { LandClass } from './land-class';
 
 
 export class CoordinateClass implements CoordinateInterface {

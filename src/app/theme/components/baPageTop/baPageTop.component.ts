@@ -242,10 +242,10 @@ getUser() {
     .map(res => res.json())
     .subscribe(
       resp => { 
-        this.user = resp.data;
+        this.user = resp.profile;
         console.log(`BaPageTop restfully get user data for ${JSON.stringify(resp)}`);
         console.log(`user ${this.user}`);
-        this.uds.setData('BaPageTop', 'profile', 'relay', this.user);                  
+        this.uds.setData('BaPageTop', 'profile', 'update', this.user);                  
       },
       err => { 
         console.log(err);

@@ -15,8 +15,8 @@
                     <div class="text-capitalize text-left" style="color:orange">Pending</div>
                 </ng-template> 
                 <dt class="text-capitalize text-right"> &#8358; {{earning.amount | number:'1.2-2'}}</dt>
-              <dd class="text-left">{{earning.rate * 100 | number:'1.2-2'}}% on &#8358; {{earning.earningAmount | number:'1.2-2'}} paid by
-                 {{earning.buyer}}'s' for purchase of land at {{earning.location}}</dd>
+              <dd class="text-left">{{earning.rate * 100 | number:'1.2-2'}}% on &#8358; {{earning.trxnAmount | number:'1.2-2'}} paid by
+                 {{earning.buyer}} for the purchase of land at {{earning.location}}</dd>
                 <dd class="text-capitalize text-right"> <small>{{earning.date}}</small></dd> 
                 
             </dl>

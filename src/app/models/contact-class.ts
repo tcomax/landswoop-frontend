@@ -1,5 +1,5 @@
 import { ContactInterface } from './contact-interface';
-
+//
 export class ContactClass implements ContactInterface {
 
     id: number;

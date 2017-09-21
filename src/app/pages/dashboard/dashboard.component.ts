@@ -158,7 +158,7 @@ export class Dashboard {
       .map(res => res.json())
       .subscribe(
         resp => { 
-          this.user = resp.data;
+          this.user = resp.profile;
           console.log(`Dashboard restfully get user data for ${JSON.stringify(this.user)}`);
           console.log(`user ${this.user}`);
           this.uds.setData('dashboard', 'profile', 'update', this.user);                  

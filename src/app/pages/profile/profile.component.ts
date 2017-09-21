@@ -54,12 +54,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.subscription = this.uds.getData('profileComponent').subscribe(
       payload => { 
         this.user = payload.data; 
-        if (payload.key === 'profile') {
+        console.log(`payload: ${JSON.stringify(payload)}`);                
+        console.log(`profile user: ${JSON.stringify(this.user)}`);        
+        if ((payload.key === 'profile') && (payload.sender !== 'profileComponent')) {
           this.avatar = this.user.photoUrl;
           (<FormGroup>this.form).controls['phone'].setValue(this.user.phone); 
           (<FormGroup>this.form).controls['bank'].setValue(this.user.bank); 
           (<FormGroup>this.form).controls['accountNum'].setValue(this.user.accountNum); 
-          console.log(`profile user: ${JSON.stringify(this.user)}`);
         }
       },
       error => {
