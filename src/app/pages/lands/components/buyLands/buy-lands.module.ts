@@ -21,7 +21,7 @@ import { SearchFilterModule } from '../../../../filters/search-filter.module';
     SearchFilterModule,
   ],
   declarations: [
-    BuyLandsComponent
+   // BuyLandsComponent
   ],
   providers: [ 
   ],
