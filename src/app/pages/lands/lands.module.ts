@@ -12,7 +12,7 @@ import { routing } from './lands.routing';
 import { LandClass } from '../../models/land-class';
 import { LandsComponent } from './lands.component';
 import { ListLandsComponent } from './components/listLands/list-lands.component';
-import { BuyLandsComponent } from './components/BuyLands/buy-lands.component';
+import { BuyLandsComponent } from './components/buyLands/buy-lands.component';
 
 import { TradeService } from '../../services/trade.service';
 import { SearchService } from '../../services/search.service';
