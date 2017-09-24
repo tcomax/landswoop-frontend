@@ -30,7 +30,7 @@ import { MomentModule } from 'angular2-moment';
     FormsModule,
     AppTranslationModule,
     NgaModule,
-    routing,
+    routing, 
     MomentModule,
   ],
   declarations: [

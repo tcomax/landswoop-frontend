@@ -6,11 +6,12 @@ import { TradeService } from '../../../../services/trade.service';
 import { SearchService } from '../../../../services/search.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DefaultModal } from './default-modal/default-modal.component';
 import { SearchFilterPipe } from '../../../../filters/search-filter.pipe';
 
 import { UserDataService } from '../../../../services/userdata.service';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-list-portfolio',
@@ -44,13 +45,12 @@ export class ListPortfolioComponent implements OnDestroy, OnInit {
     private _ts: TradeService, 
     private _ss: SearchService,
     private uds: UserDataService,   
-    private modalService: NgbModal) {
+    private router: Router) {
       
       this.subscription = this._ss.getMessage().subscribe(
         data => { 
           this.message = data; 
           console.log('listPortfolioComponent '.concat(this.message));
-          this.uds.setData('listPortfolioComponent', 'portfolio', 'reload', {});
         },
         error => {
           console.log('Error listPortfolioComponent '.concat(error));
@@ -83,16 +83,9 @@ export class ListPortfolioComponent implements OnDestroy, OnInit {
 
   @Input() portfolio: PortfolioClass[];
 
-  lgModalShow(selection: PortfolioClass) {
-    /* alert(portfolioItem.land.id);
-    this.trnx = new TransactionClass(null, 1, selection.landId, 
-      selection.location, null, null,
-      selection.quantity, 0, null, 
-      null, 0);
-
-    const activeModal = this.modalService.open(DefaultModal, { size: 'lg' });
-    activeModal.componentInstance.modalHeader = 'Details';
-    activeModal.componentInstance.portfolio = selection;*/
+  showTransactions(trxnSet: PortfolioClass) {
+    this.router.navigateByUrl('/pages/transactions');
+    this.uds.setData('listPortfolioComponent', 'topbar', 'search', trxnSet.location);    
   }
 
 }

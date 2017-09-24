@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class FeedService {
 
-  private _data = [];
+  private _data: any[];
   limit = 10;
   offset = 0;
 
@@ -16,7 +16,7 @@ export class FeedService {
     this.fetchData();
   } 
  
-  getData(limit: number, offset: number): any {
+  getData(limit: number, offset: number): any[] {
     this.limit = limit;
     this.offset = offset;
     this.fetchData();
@@ -33,11 +33,12 @@ export class FeedService {
     .map(res => res.json())
     .subscribe(
       data => { 
-        // console.log(JSON.stringify(data));
         if (data) {
             this._data = data;
+            //console.log(`feed data ${JSON.stringify(data)}`);            
         } else {
-            this._data = [];
+          //console.log(`undefined feed data ${JSON.stringify(data)}`);            
+          this._data = [];
         }
       },
       err => { 

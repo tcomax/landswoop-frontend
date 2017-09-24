@@ -35,6 +35,8 @@ export class BaPageTop {
   portfolio: PortfolioClass;
   transactions: OrderClass;
   earnings: CommissionClass;
+  search: string;
+  me = 'BaPageTop';
   
 
   constructor(
@@ -46,55 +48,42 @@ export class BaPageTop {
       this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
         this.isMenuCollapsed = isCollapsed;
       });
-  
-      this.getUser();
-      this.getTransactions();
-      this.getLands();
-      this.getEarnings();
-      this.getPortfolio();
 
-  this.subscription = this.uds.getData('dashboard').subscribe(
-    payload => { 
-      //console.log(`Dashboard : ${JSON.stringify(payload)}`);
-      if (payload.sender !== 'BaPageTop') {
-        if (payload.cmd === 'relay') {
-          if (payload.key === 'profile') {
-            console.log(`baPageTop payload: ${JSON.stringify(payload)}`);  
-            this.user = payload.data;        
-            if (this.user !== undefined) {
-              this.avatarUrl = this.user.photoUrl;            
-              console.log(`baPageTop avatar: ${this.avatarUrl}`);
-            }
-            this.uds.setData('dashboard', 'profile', 'update', payload.data);
-          } else if (payload.key === 'lands') {
-            this.uds.setData('dashboard', 'lands', 'update', payload.data);
-          } else if (payload.key === 'transactions') {
-            this.uds.setData('dashboard', 'transactions', 'update', payload.data);                                
-          } else if (payload.key === 'earnings') {
-            this.uds.setData('dashboard', 'earnings', 'update', payload.data);                                 
-          } else if (payload.key === 'portfolio') {
-            this.uds.setData('dashboard', 'portfolio', 'update', payload.data); 
+      this.subscription = this.uds.getData('dashboard').subscribe(
+        payload => { 
+          // // console.log(`Dashboard : ${JSON.stringify(payload)}`);
+          if (payload.sender !== this.me) {
+            if (payload.key === 'profile') {
+              this.getUserProfile(payload);
+              // console.log(`baPageTop payload: ${JSON.stringify(payload)}`);  
+              this.user = payload.data;        
+              if (this.user !== undefined) {
+                this.avatarUrl = this.user.photoUrl;            
+                // console.log(`baPageTop avatar: ${this.avatarUrl}`);
+              }  
+            } else if ((payload.key === 'lands') && (payload.cmd === 'list')) {
+              this.getLands(payload);
+            } else if (payload.key === 'transactions') {
+              if (payload.cmd === 'list') {
+                this.getTransactions(payload);  
+              } else if (payload.cmd === 'buy') {
+                this.uds.setData(this.me, payload.key, payload.cmd, payload.data);                                
+              }          
+            } else if ((payload.key === 'earnings') && (payload.cmd === 'list')) {
+                this.getEarnings(payload);            
+            } else if ((payload.key === 'portfolio') && (payload.cmd === 'list')) {
+                this.getPortfolio(payload);              
+            } else if ((payload.key === 'topbar') && (payload.cmd === 'search')) {
+                this.search = payload.data;    
+                this.sendMessage(this.search);      
+            } 
           }
-        } else if (payload.cmd === 'reload') {
-          if (payload.key === 'profile') {
-            this.getUser();
-          } else if (payload.key === 'lands') {
-            this.getLands();
-          } else if (payload.key === 'transactions') {
-             this.getTransactions();             
-          } else if (payload.key === 'earnings') {
-              this.getEarnings();            
-          } else if (payload.key === 'portfolio') {
-              this.getPortfolio();              
-          }
-        }
+        },                          
+        error => {
+          // console.log(`Error getting user data fro UDS - ${error}`);
+        });   
       }
-    },                          
-    error => {
-      console.log(`Error getting user data fro UDS - ${error}`);
-    });   
-  }
-
+    
   toggleMenu() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
     this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
@@ -110,7 +99,7 @@ export class BaPageTop {
      this.searchService.sendMessage(search);
      // let link = ['/pages/lands'];
      // this.router.navigate(link);
-     console.log('topbar-searchbox text is '.concat(search));
+     // console.log('topbar-searchbox text is '.concat(search));
       // alert(search);
      
  }
@@ -128,17 +117,17 @@ export class BaPageTop {
   .map(res => res.json())
   .subscribe(
     data => { 
-      console.log(`data => ${data}`);
+      // // console.log(`data => ${data}`);
       if (data.status === 'success') {
         this.router.navigateByUrl('/login');
       }
     },
     err => {
-      console.log(`error => ${err}`);
+      // console.log(`error => ${err}`);
       this.router.navigateByUrl('/login');      
     },
     () => {
-      console.log('Authentication Complete');
+      // console.log('Authentication Complete');
     },
   );
  }
@@ -157,101 +146,101 @@ export class BaPageTop {
 
  //////////////////  API Query ////////////////////////////
   
- getTransactions() {
+ getTransactions(payload: any) {
   const headers: Headers = new Headers();  
   const options = new RequestOptions({ headers, withCredentials: true });  
   this.http.get(`${this.url}/auth/transactions`, options)     
   .map(res => res.json())
   .subscribe(
-    resp => { 
-      this.transactions = resp.data;
-      console.log(`BaPageTop restfully got transaction data for ${JSON.stringify(resp)}`);
-      this.uds.setData('BaPageTop', 'transactions', 'update', this.transactions);                  
+    data => { 
+      this.transactions = data.transactions;
+      // console.log(`${this.me} restfully got transaction data for ${JSON.stringify(data)}`);
+      this.uds.setData(this.me, 'transactions', payload.cmd, this.transactions);                  
     },
     err => { 
-      console.log(err);
+      // console.log(err);
       this.router.navigateByUrl('/login');
     },
-    () => console.log('Authentication Complete'),
+    () => console.log('getTransactions Complete'),
   ); 
 }
 
-getPortfolio() {
+getPortfolio(payload: any) {
   const headers: Headers = new Headers();  
   const options = new RequestOptions({ headers, withCredentials: true });  
   this.http.get(`${this.url}/auth/portfolio`, options)     
   .map(res => res.json())
   .subscribe(
-    resp => { 
-      this.portfolio = resp.data;
-      console.log(`BaPageTop restfully got portfolio data for ${JSON.stringify(resp)}`);
-      console.log(`portfolio ${this.portfolio}`);
-      this.uds.setData('BaPageTop', 'portfolio', 'update', this.portfolio);                  
+    data => { 
+      this.portfolio = data.portfolio;
+      // console.log(`${this.me} restfully got portfolio data for ${JSON.stringify(data)}`);
+      // console.log(`portfolio ${this.portfolio}`);
+      this.uds.setData(this.me, 'portfolio', payload.cmd, this.portfolio);                  
     },
     err => { 
-      console.log(err);
+      // console.log(err);
       this.router.navigateByUrl('/login');
     },
-    () => console.log('Got Portfolio'),
+    () => console.log('getPortfolio Completed'),
   ); 
 }
 
-getEarnings() {
+getEarnings(payload: any) {
   const headers: Headers = new Headers();  
   const options = new RequestOptions({ headers, withCredentials: true });  
   this.http.get(`${this.url}/auth/earnings`, options)     
   .map(res => res.json())
   .subscribe(
-    resp => { 
-      this.earnings = resp.data;
-      console.log(`BaPageTop restfully got earnings data for ${JSON.stringify(resp)}`);
-      this.uds.setData('BaPageTop', 'earnings', 'update', this.earnings);                  
+    data => { 
+      this.earnings = data.earnings;
+      // console.log(`${this.me} restfully got earnings data for ${JSON.stringify(data)}`);
+      this.uds.setData(this.me, 'earnings', payload.cmd, this.earnings);                  
     },
     err => { 
-      console.log(err);
+      // console.log(err);
       this.router.navigateByUrl('/login');
     },
-    () => console.log('got Earnings'),
+    () => console.log('getEarnings Completed'),
   ); 
 }
 
-getLands() {
+getLands(payload: any) {
   const headers: Headers = new Headers();  
   const options = new RequestOptions({ headers, withCredentials: true });  
   this.http.get(`${this.url}/auth/lands`, options)     
   .map(res => res.json())
   .subscribe(
-    resp => { 
-      this.lands = resp.data;
-      //console.log(`Dashboard restfully got land data for ${JSON.stringify(resp)}`);
-      //console.log(`lands ${this.lands}`);
-      this.uds.setData('BaPageTop', 'lands', 'update', this.lands);                  
+    data => { 
+      this.lands = data.lands;
+      // console.log(`${this.me} restfully got land data for ${JSON.stringify(data)}`);
+      // // console.log(`lands ${this.lands}`);
+      this.uds.setData(this.me, 'lands', payload.cmd, this.lands);                  
     },
     err => { 
-      console.log(err);
+      // console.log(err);
       this.router.navigateByUrl('/login');
     },
-    () => console.log('Authentication Complete'),
+    () => console.log('getLands Complete'),
   ); 
 }
 
-getUser() {
+getUserProfile(payload: any) {
   const headers: Headers = new Headers();  
   const options = new RequestOptions({ headers, withCredentials: true });        
   this.http.get(`${this.url}/auth/profile`, options)     
     .map(res => res.json())
     .subscribe(
-      resp => { 
-        this.user = resp.profile;
-        console.log(`BaPageTop restfully get user data for ${JSON.stringify(resp)}`);
-        console.log(`user ${this.user}`);
-        this.uds.setData('BaPageTop', 'profile', 'update', this.user);                  
+      data => { 
+        this.user = data.profile;
+        // console.log(`${this.me} restfully get user data for ${JSON.stringify(data)}`);
+        // console.log(`user ${this.user}`);
+        this.uds.setData(this.me, 'profile', payload.cmd, this.user);                  
       },
       err => { 
-        console.log(err);
+        // console.log(err);
         this.router.navigateByUrl('/login');
       },
-      () => console.log('Authentication Complete'),
+      () => console.log('getUserProfile Complete'),
   ); 
 }
 

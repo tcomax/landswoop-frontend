@@ -8,16 +8,16 @@ export class SearchService {
  
     sendMessage(message: string) {
         this.subject.next(message);
-        console.log('SearchService sending '.concat(message));
+        // console.log('SearchService sending '.concat(message));
     }
  
     clearMessage() {
-        console.log('SearchService clearing a message');                
+        // console.log('SearchService clearing a message');                
         this.subject.next();
     }
  
     getMessage(): Observable<any> {
-        console.log('SearchService getting a message');        
-        return this.subject.asObservable();
+        // console.log('SearchService getting a message');        
+        return this.subject.asObservable().delay(50);
     }
 }

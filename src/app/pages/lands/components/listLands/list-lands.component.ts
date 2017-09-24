@@ -4,9 +4,6 @@ import { TransactionClass } from '../../../../models/transaction-class';
 
 import { TradeService } from '../../../../services/trade.service';
 import { SearchService } from '../../../../services/search.service';
-
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DefaultModal } from './default-modal/default-modal.component';
 import { SearchFilterPipe } from '../../../../filters/search-filter.pipe';
 
 import { UserDataService } from '../../../../services/userdata.service';
@@ -25,6 +22,7 @@ export class ListLandsComponent implements OnDestroy, OnInit {
   subscription: Subscription;
   lands: LandClass[];
   trnx: TransactionClass;
+  showBuyForm: boolean[];
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
@@ -59,14 +57,14 @@ export class ListLandsComponent implements OnDestroy, OnInit {
   constructor(
       private _ts: TradeService, 
       private _ss: SearchService,
-      private uds: UserDataService,   
-      private modalService: NgbModal) {
-        
+      private uds: UserDataService) {
+
+        this.showBuyForm = [];
         this.subscription = this._ss.getMessage().subscribe(
           data => { 
             this.message = data; 
             console.log('listLandsComponent '.concat(this.message));
-            this.uds.setData('listLandsComponent', 'lands', 'reload', {});
+            this.uds.setData('listLandsComponent', 'lands', 'list', {});
           },
           error => {
             console.log('Error listLandsComponent '.concat(error));
@@ -74,21 +72,19 @@ export class ListLandsComponent implements OnDestroy, OnInit {
          
           this.subscription = this.uds.getData('listLandsComponent').subscribe(
             payload => { 
-              if ((payload.key === 'lands') && (payload.sender !== 'listLandsComponent')) {
+              if ((payload.key === 'lands') && (payload.sender === 'BaPageTop') && (payload.cmd === 'list')) {
                 let key: any;
                 let dLands: LandClass[] = [];
                 for (key in payload.data) {
                   if (key) {
                     let land = payload.data[key];
-                    console.log(`land in payload: ${land}`);
+                    //console.log(`land in payload: ${JSON.stringify(land)}`);
+                    this.showBuyForm[land.id] = false;
                     dLands[key] = new LandClass(land.id, land.ownerId,
                       land.description, land.location, land.area, land.available, land.price);
                   }
                 }
                 this.lands = dLands;           
-                // this.lands = this._mds.lands;              
-                
-                //console.log(`list-Lands: ${JSON.stringify(this.lands)}`);
               }
             },
             error => {
@@ -98,15 +94,8 @@ export class ListLandsComponent implements OnDestroy, OnInit {
   
     newBuyOrder(land: LandClass) {
       // alert(land.id);
-      this.trnx = new TransactionClass(
-        0, 0, land.id, land.location, land.available, land.area,
-      0, land.price, null, 0, 0 );
-      const activeModal = this.modalService.open(DefaultModal, { size: 'sm' }); 
-      activeModal.componentInstance.modalHeader = 'Buy';
-      activeModal.componentInstance.trnx = this.trnx;
-      activeModal.componentInstance.land = land;   
+      this.uds.setData('listLandsComponent', 'lands', 'buy', land);
     }
 
-  // @Input() lands: LandClass[];
 }
 

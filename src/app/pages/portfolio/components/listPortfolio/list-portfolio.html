@@ -1,12 +1,12 @@
 
 <div class="vertical-scroll">
-    <table class="table table-striped">
+    <table class="table">
         <thead>
         </thead>
         <tbody>
             <tr *ngFor="let item of folio | searchfilter: 'location' : message">
                 <td class="table-id">
-                    <button class="btn-default-outline btn-block" (click)="lgModalShow(item)"> 
+                    <button class="btn-default-outline btn-block" (click)="showTransactions(item)"> 
                         <dl>
                             <dt class="text-capitalize text-right"> <b>Amount Paid: &#8358; {{item.total | number:'1.2-2'}}</b></dt>
                             <dd class="text-left">{{item.quantity}} m<sup>2</sup> at  {{item.location}}. </dd> 

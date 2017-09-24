@@ -30,46 +30,33 @@ export class Dashboard {
     private router: Router, 
     private http: Http,  
   ) {
-    this.getUser();
-    this.getTransactions();
-    this.getLands();
-    this.getEarnings();
-    this.getPortfolio();
-
+/*
     this.subscription = this.uds.getData('dashboard').subscribe(
       payload => { 
-        //console.log(`Dashboard : ${JSON.stringify(payload)}`);
-        if (payload.sender !== 'dashboard') {
-          if (payload.cmd === 'relay') {
-            if (payload.key === 'profile') {
-              this.uds.setData('dashboard', 'profile', 'update', payload.data);
-            } else if (payload.key === 'lands') {
-              this.uds.setData('dashboard', 'lands', 'update', payload.data);
-            } else if (payload.key === 'transactions') {
-              this.uds.setData('dashboard', 'transactions', 'update', payload.data);                                
-            } else if (payload.key === 'earnings') {
-              this.uds.setData('dashboard', 'earnings', 'update', payload.data);                                 
-            } else if (payload.key === 'portfolio') {
-              this.uds.setData('dashboard', 'portfolio', 'update', payload.data); 
-            }
-          } else if (payload.cmd === 'reload') {
-            if (payload.key === 'profile') {
-              this.getUser();
-            } else if (payload.key === 'lands') {
-              this.getLands();
-            } else if (payload.key === 'transactions') {
-               this.getTransactions();             
-            } else if (payload.key === 'earnings') {
-                this.getEarnings();            
-            } else if (payload.key === 'portfolio') {
-                this.getPortfolio();              
-            }
+        // console.log(`Dashboard : ${JSON.stringify(payload)}`);
+        if (payload.sender !== 'BaPageTop') {
+          if (payload.key === 'profile') {
+            this.getUserProfile(payload);
+            console.log(`baPageTop payload: ${JSON.stringify(payload)}`);  
+            this.user = payload.data;        
+            if (this.user !== undefined) {
+              this.avatarUrl = this.user.photoUrl;            
+              console.log(`baPageTop avatar: ${this.avatarUrl}`);
+            }  
+          } else if ((payload.key === 'lands') && (payload.cmd === 'list')) {
+            this.getLands(payload);
+          } else if ((payload.key === 'transactions') && (payload.cmd === 'list')) {
+             this.getTransactions(payload);             
+          } else if ((payload.key === 'earnings') && (payload.cmd === 'list')) {
+              this.getEarnings(payload);            
+          } else if ((payload.key === 'portfolio') && (payload.cmd === 'list')) {
+              this.getPortfolio(payload);              
           }
         }
       },                          
       error => {
         console.log(`Error getting user data fro UDS - ${error}`);
-      });
+      });  */
   }
  //////////////////  API Query ////////////////////////////
   

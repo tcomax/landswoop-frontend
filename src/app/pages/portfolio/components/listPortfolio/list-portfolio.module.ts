@@ -9,8 +9,6 @@ import { routing } from './list-portfolio.routing';
 import { ListPortfolioComponent } from './list-portfolio.component';
 import { PortfolioClass } from '../../../../models/portfolio-class';
 
-import { DefaultModal } from './default-modal/default-modal.component';
-
 import { SearchFilterModule } from '../../../../filters/search-filter.module';
 
 
@@ -25,11 +23,10 @@ import { SearchFilterModule } from '../../../../filters/search-filter.module';
     SearchFilterModule,
   ],
   declarations: [
-    ListPortfolioComponent,
-    DefaultModal,
+    //ListPortfolioComponent,
   ],
   providers: [
   ],
-  entryComponents: [DefaultModal],
+  entryComponents: [],
 })
 export class ListPortfolioModule {}

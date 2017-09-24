@@ -66,7 +66,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       error => {
         console.log(`Error getting user data fro UDS - ${error}`);
       });
-      this.uds.setData('ProfilesComponent', 'profile', 'reload', {});
+      this.uds.setData('ProfilesComponent', 'profile', 'list', {});
   }
 
   ngAfterViewInit() {   

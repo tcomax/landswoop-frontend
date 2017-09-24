@@ -12,7 +12,6 @@ import { routing } from './portfolio.routing';
 import { LandClass } from '../..//models/land-class';
 import { PortfolioComponent } from './portfolio.component';
 import { ListPortfolioComponent } from './components/listPortfolio/list-portfolio.component';
-import { DefaultModal } from './components/listPortfolio/default-modal/default-modal.component';
 
 import { TradeService } from '../../services/trade.service';
 import { SearchService } from '../../services/search.service';
@@ -32,12 +31,11 @@ import { SearchFilterModule } from '../../filters/search-filter.module';
   declarations: [
     ListPortfolioComponent,
     PortfolioComponent,
-    DefaultModal,
   ],  
   providers: [
     TradeService,    
   ],
-  entryComponents: [DefaultModal],
+  entryComponents: [],
 })
 export class PortfolioModule {
 }

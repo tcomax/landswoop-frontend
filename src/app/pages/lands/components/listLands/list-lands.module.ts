@@ -6,7 +6,6 @@ import { NgaModule } from '../../../../theme/nga.module';
 import { routing } from './list-lands.routing';
 
 import { ListLandsComponent } from './list-lands.component';
-import { DefaultModal } from './default-modal/default-modal.component';
 
 import { TradeService } from '../../../../services/trade.service';
 import { SearchService } from '../../../../services/search.service';
@@ -22,13 +21,12 @@ import { SearchFilterModule } from '../../../../filters/search-filter.module';
     SearchFilterModule,
   ],
   declarations: [
-    ListLandsComponent,
-    DefaultModal,
+    //ListLandsComponent,
+    //BuyLandsComponent,
   ],
   providers: [ 
   ],
   entryComponents: [
-    DefaultModal,
   ],
 
 })

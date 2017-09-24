@@ -1,0 +1,32 @@
+    <div align="left" >
+    <br>
+    <label class="control-label" for="orderTypeSuccess2">
+      {{land.description}} 
+      {{land.available | number:'1.2-2'}} per M<sup>2</sup> of available land @ &#8358; {{land.price | number:'1.2-2'}} per M<sup>2</sup>
+      <br>
+      <br>
+    </label>
+    <div *ngIf="land.available > 0; then ifcondition else elsecondition"> ... </div>  
+    <ng-template #ifcondition>
+      <div class="form-group has-success has-feedback">
+        <input type="text" class="form-control text-right" id="qty" aria-describedby="qty"
+        [(ngModel)]="quantity" (ngModelChange)="getOrderTotal(quantity)" placeholder="Enter square-meters needed e.g 10" value='0'>
+      </div>
+      <br>
+      <div>
+        <hr>
+        <div class="text-capitalize text-right">Total: &#8358; {{trxn.total | number:'1.2-2'}}</div> 
+        <hr>
+      </div>
+      <br>
+      <button class="btn-lg btn-success btn-block"  (click)="createTransaction(trxn)">Buy</button>
+      <br>
+    </ng-template>  
+    <ng-template #elsecondition style=" color: orange "><B>Sold Out!</B></ng-template> 
+      <div *ngFor="let doc of documents">
+          <img [src]="doc.image" height="32" width="32">
+          {{doc.type}} - {{doc.registrationNumber}}
+          <br>
+      </div>
+    </div>  
+  

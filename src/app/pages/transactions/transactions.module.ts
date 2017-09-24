@@ -12,7 +12,6 @@ import { routing } from './transactions.routing';
 import { TransactionClass } from '../../models/transaction-class';
 import { TransactionsComponent } from './transactions.component';
 import { ListTransactionsComponent } from './components/listTransactions/list-transactions.component';
-import { DefaultModal } from './components/listTransactions/default-modal/default-modal.component';
 
 import { TradeService } from '../../services/trade.service';
 import { SearchService } from '../../services/search.service';
@@ -33,11 +32,10 @@ import { SearchFilterModule } from '../../filters/search-filter.module';
   declarations: [
     TransactionsComponent,
     ListTransactionsComponent,
-    DefaultModal,
   ],  
   providers: [
   ],
-  entryComponents: [DefaultModal],
+  entryComponents: [],
 })
 export class TransactionsModule {
 }

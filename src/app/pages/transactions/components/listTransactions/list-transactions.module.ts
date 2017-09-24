@@ -6,7 +6,6 @@ import { NgaModule } from '../../../../theme/nga.module';
 import { routing } from './list-transactions.routing';
 
 import { ListTransactionsComponent } from './list-transactions.component';
-import { DefaultModal } from './default-modal/default-modal.component';
 
 import { TradeService } from '../../../../services/trade.service';
 import { SearchService } from '../../../../services/search.service';
@@ -22,13 +21,11 @@ import { SearchFilterModule } from '../../../../filters/search-filter.module';
     SearchFilterModule,
   ],
   declarations: [
-    ListTransactionsComponent,
-    DefaultModal,
+    //ListTransactionsComponent,
   ],
   providers: [ 
   ],
   entryComponents: [
-    DefaultModal,
   ],
 
 })

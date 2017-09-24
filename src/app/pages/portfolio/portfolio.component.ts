@@ -25,6 +25,6 @@ export class PortfolioComponent {
         error => {
           console.log(`Error getting portfolio data fro UDS - ${error}`);
         });
-        this.uds.setData('portfolioComponent', 'portfolio', 'reload', {});        
+        this.uds.setData('portfolioComponent', 'portfolio', 'list', {});        
     }
 }

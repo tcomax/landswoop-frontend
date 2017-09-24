@@ -11,16 +11,17 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 })
 export class Feed {
 
-  feed: any;
-
-  limit = 10;
+  //feed:Array<Object>;
+  feed: any[];
+  limit = 30;
   offset = 0;
 
   constructor(private _feedService: FeedService) {
+    this._loadFeed();
   }
 
   OnInit() {
-    this._loadFeed();
+    
   }
 
   expandMessage (message) {
@@ -29,8 +30,8 @@ export class Feed {
 
   private _loadFeed() {
     setInterval(() => {
-      // this.feed = this._feedService.getData(this.limit, this.offset);
-      // console.log(`feed component: ${this.feed}`);
-    }, 100000);
+      this.feed = this._feedService.getData(this.limit, this.offset);
+      // console.log(`feed component: ${this._feedService.getData(this.limit, this.offset)}`);
+    }, 600000);
   }
 }

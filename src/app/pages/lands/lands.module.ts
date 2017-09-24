@@ -12,7 +12,7 @@ import { routing } from './lands.routing';
 import { LandClass } from '../../models/land-class';
 import { LandsComponent } from './lands.component';
 import { ListLandsComponent } from './components/listLands/list-lands.component';
-import { DefaultModal } from './components/listLands/default-modal/default-modal.component';
+import { BuyLandsComponent } from './components/BuyLands/buy-lands.component';
 
 import { TradeService } from '../../services/trade.service';
 import { SearchService } from '../../services/search.service';
@@ -26,18 +26,17 @@ import { SearchFilterModule } from '../../filters/search-filter.module';
     AppTranslationModule,
     NgaModule,
     NgbRatingModule,
-    NgbModalModule,    
     routing,
     SearchFilterModule,
   ],
   declarations: [
     LandsComponent,
     ListLandsComponent,
-    DefaultModal,
+    BuyLandsComponent,
   ],  
   providers: [
   ],
-  entryComponents: [DefaultModal],
+  entryComponents: [],
 })
 export class LandsModule {
 }

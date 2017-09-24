@@ -110,6 +110,7 @@ export class Login {
             console.log(`login data => ${JSON.stringify(data)}`);
             if (data) {
               if (data.profile !== undefined) {
+                this.uds.setData('login', 'profile', 'update', data.profile);                                  
                 this.router.navigateByUrl('/pages/dashboard');
               } else {
                 this.router.navigateByUrl('/pages/profile');

@@ -12,16 +12,16 @@ export class UserDataService {
     setData(me: string, code: string, command: string, msg: any) {
         const payload = { sender: me, key: code, cmd: command, data: msg };
         this.subject.next(payload);
-        console.log(`${me} sent data notification for ${JSON.stringify(msg)}`);
+        // console.log(`${me} sent ${command} ${code} command for ${JSON.stringify(msg)}`);
     }
  
     resetData() {
-        console.log('Reset User Service');                
+        // console.log('Reset User Service');                
         this.subject.next();
     }
  
     getData(me: string): Observable<any> {
-        console.log(`${me} subscribed to UserDataService`);        
+        // console.log(`${me} subscribed to UserDataService`);        
         return this.subject.asObservable().delay(50);
     }
 }

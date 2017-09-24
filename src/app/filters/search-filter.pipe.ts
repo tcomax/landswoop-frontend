@@ -12,8 +12,8 @@ import { TransactionClass } from '../models/transaction-class';
 @Injectable()
 export class SearchFilterPipe implements PipeTransform {
  transform(items: any[], field: string, value: string): any[] {
-    console.log(`value: ${value}`);
-    console.log(`search-filter: ${JSON.stringify(items)}`);
+    // console.log(`value: ${value}`);
+    // console.log(`search-filter: ${JSON.stringify(items)}`);
     if (!items) { return []; }
     if (value === undefined) { value = ''; }
     if (LandClass.prototype.isPrototypeOf(items[0])) {

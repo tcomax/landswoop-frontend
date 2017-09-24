@@ -25,7 +25,7 @@ export class CommissionsComponent {
       error => {
         console.log(`Error getting user data fro UDS - ${error}`);
       });
-      this.uds.setData('commissionsComponent', 'earnings', 'reload', {});  
+      this.uds.setData('commissionsComponent', 'earnings', 'list', {});  
   }
 
 } 

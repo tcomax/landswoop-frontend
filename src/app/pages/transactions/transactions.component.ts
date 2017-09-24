@@ -26,6 +26,6 @@ export class TransactionsComponent {
       error => {
         console.log(`Error getting trnxs data fro UDS - ${error}`);
       });
-      this.uds.setData('TransactionsComponent', 'transactions', 'reload', {});
+      this.uds.setData('TransactionsComponent', 'transactions', 'list', {});
   }
 } 

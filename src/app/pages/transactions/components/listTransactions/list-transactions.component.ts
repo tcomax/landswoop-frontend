@@ -5,8 +5,6 @@ import { TransactionClass } from '../../../../models/transaction-class';
 import { TradeService } from '../../../../services/trade.service';
 import { SearchService } from '../../../../services/search.service';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DefaultModal } from './default-modal/default-modal.component';
 import { SearchFilterPipe } from '../../../../filters/search-filter.pipe';
 
 import { UserDataService } from '../../../../services/userdata.service';
@@ -61,14 +59,12 @@ export class ListTransactionsComponent implements OnDestroy, OnInit {
   constructor(
       private _ts: TradeService, 
       private _ss: SearchService,
-      private uds: UserDataService,   
-      private modalService: NgbModal) {
+      private uds: UserDataService) {
         
         this.subscription = this._ss.getMessage().subscribe(
           data => { 
             this.message = data; 
-            console.log('listTransactionsComponent '.concat(this.message));
-            this.uds.setData('listTransactionsComponent', 'transactions', 'reload', {});
+            console.log('listTransactionsComponent got search for'.concat(this.message));
           },
           error => {
             console.log('Error listTransactionsComponent '.concat(error));
@@ -101,10 +97,6 @@ export class ListTransactionsComponent implements OnDestroy, OnInit {
     }
   
     showDetails(trxn: TransactionClass) {
-      // alert(trxn.id);
-      const activeModal = this.modalService.open(DefaultModal, { size: 'sm' });
-      activeModal.componentInstance.modalHeader = 'Details';
-      activeModal.componentInstance.trxn = trxn;
     }
 
   // @Input() lands: LandClass[];
